@@ -2,7 +2,7 @@
 setlocal
 
 set PACKAGE_NAME=Counter
-set INSTALL_DIR="C:\users\PTV\Downloads\Keypirinha\portable\Profile\InstalledPackages"
+set INSTALL_DIR="%APPDATA%\InstalledPackages"
 
 if "%1"=="" goto help
 if "%1"=="-h" goto help
