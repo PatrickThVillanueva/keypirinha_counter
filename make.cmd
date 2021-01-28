@@ -2,7 +2,7 @@
 setlocal
 
 set PACKAGE_NAME=Counter
-set INSTALL_DIR="%APPDATA%\InstalledPackages"
+set INSTALL_DIR="%APPDATA%\Keypirinha\InstalledPackages"
 
 if "%1"=="" goto help
 if "%1"=="-h" goto help
