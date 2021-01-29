@@ -42,24 +42,25 @@ class Counter(kp.Plugin):
         if not items_chain or items_chain[-1].category() != kp.ItemCategory.KEYWORD:
             return
 
-        suggestions = []
-        suggestions.append(self.create_item(
-                category=self.ITEMCAT_COUNTER,
-                label=user_input,
-                short_desc="{} Characters".format(len(user_input)),
-                target=user_input,
-                args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.IGNORE))
+        if len(user_input) > 0:
+            suggestions = []
+            suggestions.append(self.create_item(
+                    category=self.ITEMCAT_COUNTER,
+                    label=user_input,
+                    short_desc="{} Characters".format(len(user_input)),
+                    target=user_input,
+                    args_hint=kp.ItemArgsHint.FORBIDDEN,
+                    hit_hint=kp.ItemHitHint.IGNORE))
 
-        suggestions.append(self.create_item(
-                category=self.ITEMCAT_COUNTER,
-                label=user_input,
-                short_desc="{} Words".format(len(user_input.split())),
-                target="url",
-                args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.IGNORE))
-            
-        self.set_suggestions(suggestions, kp.Match.ANY, kp.Sort.NONE)
+            suggestions.append(self.create_item(
+                    category=self.ITEMCAT_COUNTER,
+                    label=user_input,
+                    short_desc="{} Words".format(len(user_input.split())),
+                    target="url",
+                    args_hint=kp.ItemArgsHint.FORBIDDEN,
+                    hit_hint=kp.ItemHitHint.IGNORE))
+                
+            self.set_suggestions(suggestions, kp.Match.ANY, kp.Sort.NONE)
         pass
 
     def on_execute(self, item, action):
