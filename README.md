@@ -3,7 +3,7 @@
 This is Counter, a plugin for the
 [Keypirinha](http://keypirinha.com) launcher.
 
-Using the keyword "count" and then either pasting or writing an input, this returns the number of words and characters.
+Using the keyword "count" and then either pasting or writing an input, this returns the number of words, characters and occurrences.
 
 ## Download
 
