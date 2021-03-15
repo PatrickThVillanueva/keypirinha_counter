@@ -6,7 +6,7 @@ import keypirinha_net as kpnet
 
 class Counter(kp.Plugin):
     """
-    One-line description of your plugin.
+    Counts the number of words, letters and occurences of an input
     """
 
     ITEMCAT_COUNTER = kp.ItemCategory.USER_BASE + 1
@@ -16,21 +16,18 @@ class Counter(kp.Plugin):
         super().__init__()
 
     def on_start(self):
-        self.FOLDER_PATH = 'res://%s/'%(self.package_full_name())
-        actions = [
-            self.create_action(
-                name=self.ACTION_COPY_RESULT,
-                label="Copy Input",
-                short_desc="Copy input to clipboard"
-            )]
-        self.set_actions(self.ITEMCAT_COUNTER, actions)
+        self.set_actions(self.ITEMCAT_COUNTER, 
+        [self.create_action(
+            name=self.ACTION_COPY_RESULT,
+            label="Copy Input",
+            short_desc="Copy input to clipboard")])
 
     def on_catalog(self):
         catalog = []
         catalog.append(self.create_item(
             category=kp.ItemCategory.KEYWORD,
             label="Count",
-            short_desc="Count the number of letters and words in an input.",
+            short_desc="Count the number of letters, words and occurences in an input.",
             target='count',
             args_hint=kp.ItemArgsHint.REQUIRED,
             hit_hint=kp.ItemHitHint.NOARGS))
@@ -44,6 +41,7 @@ class Counter(kp.Plugin):
 
         if len(user_input) > 0:
             suggestions = []
+            words = user_input.lower().split()
             suggestions.append(self.create_item(
                     category=self.ITEMCAT_COUNTER,
                     label=user_input,
@@ -55,8 +53,22 @@ class Counter(kp.Plugin):
             suggestions.append(self.create_item(
                     category=self.ITEMCAT_COUNTER,
                     label=user_input,
-                    short_desc="{} Words".format(len(user_input.split())),
+                    short_desc="{} Words".format(len(words)),
                     target="url",
+                    args_hint=kp.ItemArgsHint.FORBIDDEN,
+                    hit_hint=kp.ItemHitHint.IGNORE))
+
+            counts = {}
+            for word in words:
+                counts[word] = counts.get(word, 0) + 1
+
+            pairs = sorted(counts.items(), key=lambda kv: kv[1], reverse=True)
+            for word, count in pairs:
+                suggestions.append(self.create_item(
+                    category=self.ITEMCAT_COUNTER,
+                    label=word,
+                    short_desc=f"{word} ({count} Occurences)",
+                    target=word,
                     args_hint=kp.ItemArgsHint.FORBIDDEN,
                     hit_hint=kp.ItemHitHint.IGNORE))
                 
