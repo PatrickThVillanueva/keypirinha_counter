@@ -44,8 +44,8 @@ class Counter(kp.Plugin):
             words = user_input.lower().split()
             suggestions.append(self.create_item(
                     category=self.ITEMCAT_COUNTER,
-                    label=user_input,
-                    short_desc=f"{len(words)} Words / {len(user_input)} Characters",
+                    label=f"{len(words)} Words / {len(user_input)} Characters",
+                    short_desc=user_input,
                     target=user_input,
                     args_hint=kp.ItemArgsHint.FORBIDDEN,
                     hit_hint=kp.ItemHitHint.IGNORE))
